@@ -1,0 +1,9 @@
+{
+  "name": "julia-coach",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A chart-grounded chat coach for Julia, deployed as Netlify Functions with persistent memory via Netlify Blobs.",
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  }
+}

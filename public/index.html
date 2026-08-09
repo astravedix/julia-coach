@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Julia Lazovsky — A Study in Nature &amp; Timing</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0e2b22;
+    --navy2:#3a1622;
+    --navy3:#4c1f2c;
+    --gold:#c9a15c;
+    --gold-dim:#8b764f;
+    --cream:#f4ecda;
+    --ink:#26243a;
+    --rose:#d98fa0;
+    --teal:#22935f;
+    --line: rgba(201,161,92,0.35);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse at 20% -10%, rgba(201,161,92,0.12), transparent 45%),
+      radial-gradient(ellipse at 90% 0%, rgba(217,143,160,0.10), transparent 40%),
+      radial-gradient(ellipse at 50% 100%, rgba(34,147,95,0.14), transparent 50%),
+      var(--navy);
+    color:var(--cream);
+    font-family:'Jost', sans-serif;
+    font-weight:300;
+    line-height:1.65;
+    min-height:100vh;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:0 28px 80px;}
+
+  /* ---- Hero ---- */
+  .hero{
+    padding:64px 28px 40px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .stagelights{
+    position:absolute; top:0; left:50%; transform:translateX(-50%);
+    width:900px; height:260px; pointer-events:none; opacity:0.55;
+  }
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    letter-spacing:0.35em;
+    text-transform:uppercase;
+    font-size:11px;
+    color:var(--gold);
+    margin-bottom:18px;
+  }
+  h1.title{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    font-size:clamp(42px, 7vw, 74px);
+    margin:0;
+    letter-spacing:0.02em;
+    color:var(--cream);
+    text-shadow:0 0 40px rgba(201,161,92,0.25);
+  }
+  .subtitle{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:20px;
+    color:var(--gold);
+    margin-top:10px;
+    letter-spacing:0.02em;
+  }
+  .billing{
+    margin-top:28px;
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.08em;
+    color:rgba(244,236,218,0.65);
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:6px 18px;
+  }
+  .billing span{white-space:nowrap;}
+  .billing b{color:var(--cream); font-weight:500;}
+  .rule{
+    width:120px; height:1px; margin:34px auto 0;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  /* ---- Tabs ---- */
+  .tabs{
+    display:flex; justify-content:center; gap:6px;
+    margin:36px 0 6px;
+    flex-wrap:wrap;
+  }
+  .tab-btn{
+    font-family:'Space Mono', monospace;
+    background:transparent;
+    border:1px solid var(--line);
+    color:rgba(244,236,218,0.7);
+    padding:11px 22px;
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    cursor:pointer;
+    border-radius:2px;
+    transition:all .25s ease;
+  }
+  .tab-btn:hover{ color:var(--cream); border-color:var(--gold); }
+  .tab-btn.active{
+    background:var(--gold);
+    border-color:var(--gold);
+    color:var(--navy);
+    font-weight:700;
+  }
+
+  .panel{ display:none; animation:fade .5s ease; }
+  .panel.active{ display:block; }
+  @keyframes fade{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+
+  .lede{
+    font-family:'Cormorant Garamond', serif;
+    font-size:22px;
+    line-height:1.7;
+    color:var(--cream);
+    max-width:680px;
+    margin:44px auto 8px;
+    text-align:center;
+  }
+  .lede em{ color:var(--gold); font-style:normal; }
+
+  .section-label{
+    font-family:'Space Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    color:var(--gold-dim);
+    text-align:center;
+    margin:56px 0 20px;
+  }
+
+  /* ---- Trait cards ---- */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:18px;
+    margin-top:10px;
+  }
+  @media(max-width:680px){ .grid{ grid-template-columns:1fr; } }
+
+  .card{
+    background:linear-gradient(160deg, var(--navy2), var(--navy3));
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:24px 26px;
+    position:relative;
+  }
+  .card::before{
+    content:'';
+    position:absolute; top:0; left:0; width:3px; height:100%;
+    background:var(--accent, var(--gold));
+    border-radius:4px 0 0 4px;
+  }
+  .card h3{
+    font-family:'Cormorant Garamond', serif;
+    font-size:22px;
+    font-weight:600;
+    margin:0 0 4px;
+    color:var(--cream);
+  }
+  .card .tag{
+    font-family:'Space Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--accent, var(--gold));
+    margin-bottom:12px;
+    display:block;
+  }
+  .card p{ font-size:14.5px; color:rgba(244,236,218,0.85); margin:0; }
+  .card p + p{ margin-top:8px; }
+
+  .card.gold{ --accent: var(--gold); }
+  .card.rose{ --accent: var(--rose); }
+  .card.teal{ --accent: var(--teal); }
+
+  .synthesis{
+    margin:56px auto 0;
+    max-width:700px;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:32px 8px;
+    text-align:center;
+    font-family:'Cormorant Garamond', serif;
+    font-size:19px;
+    font-style:italic;
+    color:rgba(244,236,218,0.9);
+  }
+
+  /* ---- Timeline (Berklee Years) ---- */
+  .timeline{ margin-top:20px; position:relative; }
+  .timeline::before{
+    content:'';
+    position:absolute; left:20px; top:6px; bottom:6px; width:1px;
+    background:linear-gradient(var(--gold), transparent 95%);
+  }
+  @media(max-width:600px){ .timeline::before{left:12px;} }
+
+  .year-block{ position:relative; padding-left:56px; margin-bottom:38px; }
+  @media(max-width:600px){ .year-block{ padding-left:36px; } }
+
+  .year-dot{
+    position:absolute; left:12px; top:4px;
+    width:17px; height:17px; border-radius:50%;
+    background:var(--navy);
+    border:2px solid var(--gold);
+  }
+  @media(max-width:600px){ .year-dot{left:4px;} }
+
+  .year-head{
+    display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;
+    margin-bottom:10px;
+  }
+  .year-num{
+    font-family:'Space Mono', monospace;
+    font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--gold-dim);
+  }
+  .year-title{
+    font-family:'Cormorant Garamond', serif;
+    font-size:28px; font-weight:600; color:var(--cream);
+  }
+  .year-dates{
+    font-family:'Space Mono', monospace;
+    font-size:12px; color:rgba(244,236,218,0.55);
+  }
+
+  .layer-row{
+    display:grid;
+    grid-template-columns:150px 1fr;
+    gap:14px;
+    padding:10px 0;
+    border-top:1px solid rgba(201,161,92,0.15);
+  }
+  @media(max-width:560px){ .layer-row{ grid-template-columns:1fr; gap:4px; } }
+  .layer-row:first-of-type{ border-top:none; }
+  .layer-name{
+    font-family:'Space Mono', monospace;
+    font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--rose);
+    padding-top:2px;
+  }
+  .layer-val{ font-size:14.5px; color:rgba(244,236,218,0.88); }
+  .layer-val b{ color:var(--cream); font-weight:500; }
+
+  .watch-box{
+    margin-top:14px;
+    background:rgba(201,161,92,0.08);
+    border-left:2px solid var(--gold);
+    padding:12px 16px;
+    font-size:13.5px;
+    color:rgba(244,236,218,0.9);
+  }
+  .watch-box b{ color:var(--gold); font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; display:block; margin-bottom:4px; }
+
+  .ritual-list{ counter-reset:step; margin-top:18px; padding:0; list-style:none; }
+  .ritual-list li{
+    counter-increment:step;
+    position:relative;
+    padding:14px 0 14px 46px;
+    border-top:1px solid rgba(201,161,92,0.15);
+    font-size:14.5px;
+    color:rgba(244,236,218,0.88);
+  }
+  .ritual-list li:first-child{ border-top:none; }
+  .ritual-list li::before{
+    content:counter(step);
+    position:absolute; left:0; top:12px;
+    width:28px; height:28px;
+    border:1px solid var(--gold);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Space Mono', monospace; font-size:12px; color:var(--gold);
+  }
+  .ritual-list li b{ color:var(--cream); font-weight:500; }
+  .swatch-row{ display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+  .swatch{
+    display:flex; align-items:center; gap:8px;
+    font-family:'Space Mono', monospace; font-size:11px; color:rgba(244,236,218,0.75);
+  }
+  .swatch i{ width:16px; height:16px; border-radius:50%; display:inline-block; border:1px solid rgba(255,255,255,0.2); }
+  .pullquote{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:24px;
+    text-align:center;
+    color:var(--gold);
+    max-width:600px;
+    margin:8px auto 0;
+    line-height:1.5;
+  }
+
+  .vig-bar{ display:flex; height:34px; border-radius:4px; overflow:hidden; border:1px solid var(--line); margin-top:16px; }
+  .vig-seg{ display:flex; align-items:center; justify-content:center; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.04em; }
+  .vig-legend{ display:flex; gap:16px; margin-top:12px; flex-wrap:wrap; font-family:'Space Mono',monospace; font-size:11px; color:rgba(244,236,218,0.75); }
+  .vig-legend i{ width:10px; height:10px; border-radius:2px; display:inline-block; margin-right:6px; vertical-align:-1px; }
+  .vig-table{ width:100%; border-collapse:collapse; margin-top:18px; font-size:13px; }
+  .vig-table th{ font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gold-dim); text-align:left; padding:6px 10px; border-bottom:1px solid var(--line); }
+  .vig-table td{ padding:7px 10px; border-bottom:1px solid rgba(201,161,92,0.12); color:rgba(244,236,218,0.85); }
+  .vig-dot{ width:9px; height:9px; border-radius:2px; display:inline-block; }
+
+  .vig-detail{ margin-top:20px; }
+  .vig-row{ display:grid; grid-template-columns:170px 1fr; gap:16px; padding:14px 0; border-top:1px solid rgba(201,161,92,0.15); }
+  .vig-row:first-child{ border-top:none; }
+  @media(max-width:600px){ .vig-row{ grid-template-columns:1fr; gap:4px; } }
+  .vig-head{ display:flex; align-items:center; gap:8px; }
+  .vig-head b{ font-family:'Cormorant Garamond',serif; font-size:17px; font-weight:600; color:var(--cream); }
+  .vig-dates{ font-family:'Space Mono',monospace; font-size:10.5px; color:rgba(244,236,218,0.5); margin-top:2px; }
+  .vig-level{ font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-top:4px; display:inline-block; }
+  .vig-desc{ font-size:13.5px; color:rgba(244,236,218,0.85); }
+
+  .emblem{ width:160px; height:160px; margin:0 auto 16px; display:block; }
+  .emblem-ring{ display:flex; justify-content:center; }
+
+  .coach-gate{ max-width:340px; margin:20px auto 40px; text-align:center; }
+  .coach-gate input{
+    width:100%; padding:11px 14px; margin-top:6px;
+    background:var(--navy2); border:1px solid var(--line); border-radius:4px;
+    color:var(--cream); font-family:'Jost',sans-serif; font-size:14.5px;
+  }
+  .coach-gate button{
+    margin-top:12px; width:100%; padding:11px;
+    background:var(--gold); color:var(--navy); border:none; border-radius:4px;
+    font-family:'Space Mono',monospace; letter-spacing:.08em; text-transform:uppercase;
+    font-size:11.5px; font-weight:700; cursor:pointer;
+  }
+  #chat-panel{ display:none; max-width:640px; margin:0 auto; flex-direction:column; }
+  #chat-messages{
+    display:flex; flex-direction:column; gap:14px;
+    min-height:280px; max-height:50vh; overflow-y:auto;
+    padding:20px 4px; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    margin-top:20px;
+  }
+  .cmsg{ max-width:82%; padding:11px 15px; border-radius:8px; font-size:14px; line-height:1.6; }
+  .cmsg.user{
+    align-self:flex-end;
+    background:linear-gradient(160deg, var(--navy3), var(--navy2));
+    border:1px solid var(--line); color:var(--cream);
+  }
+  .cmsg.coach{
+    align-self:flex-start;
+    background:rgba(201,161,92,0.08); border-left:2px solid var(--gold);
+    color:rgba(244,236,218,0.92);
+  }
+  .cmsg.sys{ align-self:center; font-family:'Space Mono',monospace; font-size:11px; color:rgba(244,236,218,0.4); }
+  #chat-input-row{ display:flex; gap:10px; padding:16px 4px 4px; }
+  #chat-input-row textarea{
+    flex:1; resize:none; padding:11px 14px; min-height:44px; max-height:110px;
+    background:var(--navy2); border:1px solid var(--line); border-radius:6px;
+    color:var(--cream); font-family:'Jost',sans-serif; font-size:14px;
+  }
+  #chat-input-row button{
+    padding:0 20px; background:var(--gold); color:var(--navy); border:none;
+    border-radius:6px; font-family:'Space Mono',monospace; font-size:11px;
+    letter-spacing:.08em; text-transform:uppercase; font-weight:700; cursor:pointer;
+  }
+  #chat-input-row button:disabled{ opacity:0.5; }
+  .ctyping{ display:flex; gap:4px; align-self:flex-start; padding:6px 4px; }
+  .ctyping span{ width:6px; height:6px; border-radius:50%; background:var(--gold); opacity:0.4; animation:cblink 1.2s infinite; }
+  .ctyping span:nth-child(2){ animation-delay:0.2s; }
+  .ctyping span:nth-child(3){ animation-delay:0.4s; }
+  @keyframes cblink{ 0%,80%,100%{opacity:0.2;} 40%{opacity:1;} }
+
+  #outlook-banner{
+    max-width:640px; margin:0 auto 28px; padding:16px 22px;
+    border-radius:6px; border-left:3px solid var(--gold);
+    background:rgba(201,161,92,0.08);
+    display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;
+  }
+  #outlook-banner .ob-label{
+    font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.15em; text-transform:uppercase;
+    margin-bottom:4px;
+  }
+  #outlook-banner .ob-desc{ font-size:13px; color:rgba(244,236,218,0.85); max-width:420px; }
+  #outlook-banner .ob-days{
+    font-family:'Space Mono',monospace; font-size:11px; color:rgba(244,236,218,0.55); white-space:nowrap;
+  }
+
+  footer{
+    text-align:center; margin-top:60px;
+    font-family:'Space Mono', monospace;
+    font-size:10.5px; letter-spacing:.15em; text-transform:uppercase;
+    color:rgba(244,236,218,0.35);
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <svg class="stagelights" viewBox="0 0 900 260" preserveAspectRatio="xMidYMin meet">
+    <g stroke="#c9a15c" stroke-width="0.6" opacity="0.5">
+      <line x1="450" y1="260" x2="120" y2="0"/>
+      <line x1="450" y1="260" x2="230" y2="0"/>
+      <line x1="450" y1="260" x2="340" y2="0"/>
+      <line x1="450" y1="260" x2="450" y2="0"/>
+      <line x1="450" y1="260" x2="560" y2="0"/>
+      <line x1="450" y1="260" x2="670" y2="0"/>
+      <line x1="450" y1="260" x2="780" y2="0"/>
+    </g>
+    <g fill="#c9a15c">
+      <circle cx="120" cy="4" r="2.2"/>
+      <circle cx="230" cy="4" r="2.2"/>
+      <circle cx="340" cy="4" r="2.2"/>
+      <circle cx="450" cy="4" r="2.6"/>
+      <circle cx="560" cy="4" r="2.2"/>
+      <circle cx="670" cy="4" r="2.2"/>
+      <circle cx="780" cy="4" r="2.2"/>
+    </g>
+  </svg>
+  <div class="eyebrow">A Study in Nature &amp; Timing</div>
+  <h1 class="title">Julia Lazovsky</h1>
+  <div class="subtitle">Virgo Rising · Projector · Life Path 6 / Master 33</div>
+  <div class="billing">
+    <span>Ruled by <b>Mercury</b></span>
+    <span>·</span>
+    <span>Hasta Nakshatra</span>
+    <span>·</span>
+    <span>Emotional Authority</span>
+    <span>·</span>
+    <span>Sun–Mars bracket the <b>Galactic Center</b></span>
+  </div>
+  <div class="rule"></div>
+</div>
+
+<div id="outlook-banner"></div>
+
+<div class="tabs">
+  <button class="tab-btn active" data-tab="nature">Her Nature</button>
+  <button class="tab-btn" data-tab="berklee">The Berklee Years</button>
+  <button class="tab-btn" data-tab="practice">Her Practice</button>
+  <button class="tab-btn" data-tab="strategy">Opportunities</button>
+  <button class="tab-btn" data-tab="technique">Her Technique</button>
+  <button class="tab-btn" data-tab="surf">The Surf</button>
+  <button class="tab-btn" data-tab="coach">Her Coach</button>
+</div>
+
+<div class="wrap">
+
+  <!-- ===================== TAB 1: HER NATURE ===================== -->
+  <div class="panel active" id="nature">
+
+    <p class="lede">Six independent systems — Vedic astrology, Human Design, numerology, Gene Keys, the Draconic soul-chart, and Western technical astrology — were read <em>separately</em>, then compared. They keep landing on the same two threads: exacting, disciplined craft, in service of something larger than herself.</p>
+
+    <div class="section-label">The Foundation</div>
+    <div class="grid">
+      <div class="card gold">
+        <span class="tag">Vedic · The Foundation</span>
+        <h3>The Analyst Who Makes Things</h3>
+        <p>Virgo Ascendant <i>and</i> Virgo Moon — not two competing signals, one reinforced signal. Detail-driven, calm under pressure, quietly exacting.</p>
+        <p>Hasta Nakshatra adds sharp-mindedness and a documented pattern of thriving more in self-directed / owned work than a fixed track.</p>
+      </div>
+      <div class="card gold">
+        <span class="tag">Vedic · Navamsa (D9)</span>
+        <h3>The Promise Holds Up</h3>
+        <p>Sun and Moon land in the <i>same</i> sign in the deeper D9 chart (Taurus) — steadiness underneath the surface analysis. Mercury's own D9 return doubles down on the craft signature.</p>
+      </div>
+      <div class="card rose">
+        <span class="tag">Human Design</span>
+        <h3>The One Who Waits to Be Invited</h3>
+        <p>Projector, Emotional Authority, 1/3 Profile. Not built for tireless nonstop output — built to <i>see</i> and to guide. Success comes through recognition, not through forcing.</p>
+        <p>Triple Split definition: three separate zones of strength (mind, expression, drive) that need real experience to learn to work as one.</p>
+      </div>
+      <div class="card rose">
+        <span class="tag">Human Design · Cross</span>
+        <h3>Right Angle Cross of the Vessel of Love</h3>
+        <p>Gates 10/15 | 46/25 — a life theme built around self-love, determination, and universal love expressed outward as art.</p>
+      </div>
+      <div class="card teal">
+        <span class="tag">Numerology</span>
+        <h3>6, Learning Its Way Toward 33</h3>
+        <p>Life Path 6 — responsibility, nurturing, craft made in service of others. In the master-number tradition, 6 is the grounded octave of <b>33</b>, the Master Teacher — someone whose art doesn't just express, it uplifts and instructs.</p>
+        <p>Read plainly: the discipline of 6 is the training ground for the teaching power of 33.</p>
+      </div>
+      <div class="card teal">
+        <span class="tag">Gene Keys</span>
+        <h3>Life's Work: Gate 10</h3>
+        <p>Her Personality Sun activates Gate/Key 10 — the same gate her Human Design Sun activates, meaning both systems point at the identical core theme: becoming fully, unapologetically herself <i>as</i> the work.</p>
+      </div>
+      <div class="card gold">
+        <span class="tag">Draconic · The Soul Chart</span>
+        <h3>Innovation, Fueled by Depth</h3>
+        <p>Shift the chart to her North Node and the Sun lands in Aquarius, the Moon in Scorpio — a soul-level pairing of forward-looking originality running on deep emotional and transformative fuel.</p>
+      </div>
+      <div class="card rose">
+        <span class="tag">Western Technical</span>
+        <h3>Born Under a Night Sky</h3>
+        <p>A nocturnal chart — Jupiter is her sect-appropriate ruler of the Sun's own sign, showing up again as a key figure across totally separate systems (Vedic dasha lord <i>and</i> Western trigon lord).</p>
+        <p>Her Sun sits 1.8° past the Galactic Center, her Mars 2.2° before it — the Center falls almost exactly between them.</p>
+      </div>
+    </div>
+
+    <div class="synthesis">
+      "She is built less to perform the piece, and more to be the reason the piece works — the eye that sees the whole stage, the hand that shapes what everyone else moves through."
+    </div>
+
+  </div>
+
+  <!-- ===================== TAB 2: THE BERKLEE YEARS ===================== -->
+  <div class="panel" id="berklee">
+
+    <p class="lede">Four systems, layered by year: her Vedic Mahadasha/Antardasha (the deep current), her Char Dasha (the season she's in), Saturn's minor transits (friction windows), and her Personal Year Number (the yearly numerology pulse).</p>
+
+    <div class="timeline">
+
+      <div class="year-block">
+        <div class="year-dot"></div>
+        <div class="year-head">
+          <span class="year-num">Year 1</span>
+          <span class="year-title">Arrival</span>
+          <span class="year-dates">Fall 2026 – Aug 2027</span>
+        </div>
+        <div class="layer-row"><div class="layer-name">Mahadasha</div><div class="layer-val">Rahu <b>/ Jupiter</b> antardasha — outsized opportunity attached to a bigger name or legacy (fits a Fosse-legacy partnership landing right as she arrives)</div></div>
+        <div class="layer-row"><div class="layer-name">Char Dasha</div><div class="layer-val">Capricorn — structure, discipline, earned mastery</div></div>
+        <div class="layer-row"><div class="layer-name">Personal Year</div><div class="layer-val"><b>6</b> → responsibility, craft, service through art</div></div>
+        <div class="watch-box"><b>Watch for</b>A door that looks bigger than her current résumé would predict. Jupiter is weak in her chart here — walk through it with real discipline, not assumed ease.</div>
+      </div>
+
+      <div class="year-block">
+        <div class="year-dot"></div>
+        <div class="year-head">
+          <span class="year-num">Years 2–3</span>
+          <span class="year-title">The Grind That Builds the Craft</span>
+          <span class="year-dates">Aug 2027 – mid 2030</span>
+        </div>
+        <div class="layer-row"><div class="layer-name">Mahadasha</div><div class="layer-val">Rahu <b>/ Saturn</b> antardasha — long-haul mastery, less flash, more repetition</div></div>
+        <div class="layer-row"><div class="layer-name">Char Dasha</div><div class="layer-val">Aquarius → Pisces — Pisces is the natural home of dance and artistic surrender; landing during actual training years is a real overlap</div></div>
+        <div class="layer-row"><div class="layer-name">Saturn Minor Transits</div><div class="layer-val">Jun–Oct 2027, Feb 2028–Aug 2029, Oct 2029–Apr 2030 — friction windows, not failure windows</div></div>
+        <div class="layer-row"><div class="layer-name">Personal Years</div><div class="layer-val"><b>7 → 8 → 9</b> — introspection and refinement, into achievement, into completion</div></div>
+        <div class="watch-box"><b>Watch for</b>A rejection or hard critique landing in one of the Saturn-transit windows above. The chart's own logic reads this as training, not verdict.</div>
+      </div>
+
+      <div class="year-block">
+        <div class="year-dot"></div>
+        <div class="year-head">
+          <span class="year-num">Year 4+</span>
+          <span class="year-title">Her Own Signature</span>
+          <span class="year-dates">Mid 2030 – 2031+</span>
+        </div>
+        <div class="layer-row"><div class="layer-name">Mahadasha</div><div class="layer-val">Rahu <b>/ Mercury</b> antardasha begins — Mercury rules <i>both</i> her Ascendant and Moon; this is the period that feels most like herself</div></div>
+        <div class="layer-row"><div class="layer-name">Char Dasha</div><div class="layer-val">Aries begins — bold, individual, "the first of something"</div></div>
+        <div class="layer-row"><div class="layer-name">Personal Year</div><div class="layer-val">2030 = <b>1</b> (new cycle) → 2031 = <b>11</b>, a Master Year — landing exactly on her breakout window</div></div>
+        <div class="watch-box"><b>Watch for</b>The moment something feels unmistakably self-authored rather than assigned. Four separate systems agree this stretch is where a signature piece of work is most likely to take shape.</div>
+      </div>
+
+    </div>
+
+    <div class="section-label">Full Berklee Span — Sub-Period Vigilance Map</div>
+    <div class="vig-bar">
+      <div class="vig-seg" style="flex-grow:147; background:#22935f;" title="Venus, Apr–Sep 2026"></div>
+      <div class="vig-seg" style="flex-grow:45; background:#c9a15c; color:#3a2a08;" title="Sun, Sep–Nov 2026"></div>
+      <div class="vig-seg" style="flex-grow:73; background:#c9a15c; color:#3a2a08;" title="Moon, Nov 2026–Jan 2027"></div>
+      <div class="vig-seg" style="flex-grow:49; background:#b5442e; color:#fceee9;" title="Mars, Jan–Mar 2027"></div>
+      <div class="vig-seg" style="flex-grow:132; background:#b5442e; color:#fceee9;" title="Rahu, Mar–Jul 2027"></div>
+      <div class="vig-seg" style="flex-grow:165; background:#7a2020; color:#fceee9;" title="Saturn, Jul–Dec 2027"></div>
+      <div class="vig-seg" style="flex-grow:146; background:#22935f;" title="Mercury, Dec 2027–May 2028"></div>
+      <div class="vig-seg" style="flex-grow:61; background:#c9a15c; color:#3a2a08;" title="Ketu, May–Jul 2028"></div>
+      <div class="vig-seg" style="flex-grow:175; background:#22935f;" title="Venus, Jul 2028–Jan 2029"></div>
+      <div class="vig-seg" style="flex-grow:51; background:#c9a15c; color:#3a2a08;" title="Sun, Jan–Mar 2029"></div>
+      <div class="vig-seg" style="flex-grow:86; background:#c9a15c; color:#3a2a08;" title="Moon, Mar–May 2029"></div>
+      <div class="vig-seg" style="flex-grow:61; background:#b5442e; color:#fceee9;" title="Mars, May–Jul 2029"></div>
+      <div class="vig-seg" style="flex-grow:158; background:#b5442e; color:#fceee9;" title="Rahu, Jul 2029–Jan 2030"></div>
+      <div class="vig-seg" style="flex-grow:137; background:#c9a15c; color:#3a2a08;" title="Jupiter, Jan–May 2030"></div>
+    </div>
+    <div class="vig-legend">
+      <span><i style="background:#22935f;"></i>Flow</span>
+      <span><i style="background:#c9a15c;"></i>Gentle vigilance</span>
+      <span><i style="background:#b5442e;"></i>High vigilance</span>
+      <span><i style="background:#7a2020;"></i>Heaviest test</span>
+    </div>
+    <div class="vig-detail">
+      <div class="vig-row">
+        <div class="vig-head"><b>Venus</b></div>
+        <div>
+          <div class="vig-dates">Apr–Sep 2026</div>
+          <div class="vig-level" style="color:#3fbf82;">● Flow</div>
+          <p class="vig-desc">Harmony and grace come easily — social ease, aesthetic pleasure, and relationships flow with little resistance. The right window to build a habit while it costs little effort to maintain.</p>
+        </div>
+      </div>
+      <div class="vig-row">
+        <div class="vig-head"><b>Sun</b></div>
+        <div>
+          <div class="vig-dates">Sep–Nov 2026</div>
+          <div class="vig-level" style="color:#e0b872;">● Gentle vigilance</div>
+          <p class="vig-desc">Visibility and ego exposure rise — more attention, more recognition, more chances to feel singled out. The watch-point here is pride or overextending to be seen, not a discipline risk.</p>
+        </div>
+      </div>
+      <div class="vig-row">
+        <div class="vig-head"><b>Moon</b></div>
+        <div>
+          <div class="vig-dates">Nov 2026–Jan 2027</div>
+          <div class="vig-level" style="color:#e0b872;">● Gentle vigilance</div>
+          <p class="vig-desc">Her own natural Moon strength gets amplified — emotional sensitivity and intuition both run high. Good for artistry, but mood becomes more noticeable and needs a conscious hand so it doesn't quietly steer the routine.</p>
+        </div>
+      </div>
+      <div class="vig-row">
+        <div class="vig-head"><b>Mars</b></div>
+        <div>
+          <div class="vig-dates">Jan–Mar 2027</div>
+          <div class="vig-level" style="color:#e0806c;">● High vigilance</div>
+          <p class="vig-desc">Friction, impulsiveness, short temper, and real injury risk in physical training. The caution here is bodily and interpersonal — pace matters more than usual, and conflicts are easier to spark than to walk back.</p>
+        </div>
+      </div>
+      <div class="vig-row">
+        <div class="vig-head"><b>Rahu</b></div>
+        <div>
+          <div class="vig-dates">Mar–Jul 2027</div>
+          <div class="vig-level" style="color:#e0806c;">● High vigilance</div>
+          <p class="vig-desc">Restlessness and a pull toward whatever looks shinier than the current plan. The longest single risk stretch in year one — the discipline challenge isn't intensity, it's scatter and follow-through.</p>
+        </div>
+      </div>
+      <div class="vig-row">
+        <div class="vig-head"><b>Saturn</b></div>
+        <div>
+          <div class="vig-dates">Jul–Dec 2027</div>
+          <div class="vig-level" style="color:#c56a6a;">● Heaviest test</div>
+          <p class="vig-desc">Slow results, real fatigue, and a genuine test of whether she keeps showing up when nothing feels like it's paying off yet. Not a punishing period — a proving one. Holding steady here is what mastery is actually built from.</p>
+        </div>
+      </div>
+      <div class="vig-row">
+        <div class="vig-head"><b>Mercury</b></div>
+        <div>
+          <div class="vig-dates">Dec 2027–May 2028</div>
+          <div class="vig-level" style="color:#3fbf82;">● Flow</div>
+          <p class="vig-desc">Her own chart ruler active — mental clarity, precision, and communication all come more naturally. A genuine "return to herself" window after the Saturn stretch just before it.</p>
+        </div>
+      </div>
+      <div class="vig-row">
+        <div class="vig-head"><b>Ketu</b></div>
+        <div>
+          <div class="vig-dates">May–Jul 2028</div>
+          <div class="vig-level" style="color:#e0b872;">● Gentle vigilance</div>
+          <p class="vig-desc">A short, foggy, detached stretch — motivation can feel quietly absent rather than blocked by anything specific. Needs a light check-in, not a heavy correction; it passes quickly.</p>
+        </div>
+      </div>
+      <div class="vig-row">
+        <div class="vig-head"><b>Venus</b></div>
+        <div>
+          <div class="vig-dates">Jul 2028–Jan 2029</div>
+          <div class="vig-level" style="color:#3fbf82;">● Flow</div>
+          <p class="vig-desc">Harmony returns for a longer stretch than the first Venus window — a strong period for relationships, partnership-based work, and ease in the craft.</p>
+        </div>
+      </div>
+      <div class="vig-row">
+        <div class="vig-head"><b>Sun</b></div>
+        <div>
+          <div class="vig-dates">Jan–Mar 2029</div>
+          <div class="vig-level" style="color:#e0b872;">● Gentle vigilance</div>
+          <p class="vig-desc">Same visibility theme as the first Sun window, now arriving with two more years of experience and reputation behind it — likely to show up as real leadership or spotlight moments rather than just exposure. Same watch-point on ego still applies.</p>
+        </div>
+      </div>
+      <div class="vig-row">
+        <div class="vig-head"><b>Moon</b></div>
+        <div>
+          <div class="vig-dates">Mar–May 2029</div>
+          <div class="vig-level" style="color:#e0b872;">● Gentle vigilance</div>
+          <p class="vig-desc">A longer emotional-sensitivity stretch than the first Moon window — more time for mood to steer decisions if left unwatched, so the conscious balancing act needs to be sustained rather than momentary.</p>
+        </div>
+      </div>
+      <div class="vig-row">
+        <div class="vig-head"><b>Mars</b></div>
+        <div>
+          <div class="vig-dates">May–Jul 2029</div>
+          <div class="vig-level" style="color:#e0806c;">● High vigilance</div>
+          <p class="vig-desc">The same friction-and-injury caution as the first Mars window. Worth noting this one lands close to the end of a school year, when fatigue is already higher — patience runs thinner than usual here.</p>
+        </div>
+      </div>
+      <div class="vig-row">
+        <div class="vig-head"><b>Rahu</b></div>
+        <div>
+          <div class="vig-dates">Jul 2029–Jan 2030</div>
+          <div class="vig-level" style="color:#e0806c;">● High vigilance</div>
+          <p class="vig-desc">Nearly as long as the first Rahu stretch — restlessness and distraction again, this time arriving as she's approaching her final year. The temptation to chase something new right before the home stretch is the specific risk here.</p>
+        </div>
+      </div>
+      <div class="vig-row">
+        <div class="vig-head"><b>Jupiter</b></div>
+        <div>
+          <div class="vig-dates">Jan–May 2030</div>
+          <div class="vig-level" style="color:#e0b872;">● Gentle vigilance (effort required)</div>
+          <p class="vig-desc">Growth and opportunity are on offer, but this Jupiter is weak in her chart — nothing arrives on easy luck here. Expansion has to be worked for rather than assumed, right as she's closing out her Berklee years.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label">What Each Level Actually Means, Era by Era</div>
+    <p class="lede" style="margin-top:0;">The same word — flow, gentle, high — doesn't mean the same thing twice. It's colored by which deep current (Mahadasha/Antardasha) it's happening inside. A "flow" period during a door-opening era is a different animal than a "flow" period during a grinding one.</p>
+
+    <div class="watch-box" style="margin-top:24px;">
+      <b>Rahu · Jupiter — "opportunity attached to a bigger name" (through Aug 2027)</b>
+      Every level below is happening while a larger door is actively swinging open — the Fosse-legacy-shaped opportunity, the arrival at Berklee itself. That backdrop changes what each level feels like:
+    </div>
+    <div class="grid" style="margin-top:14px;">
+      <div class="card" style="--accent:#6be3a4; background:linear-gradient(160deg, #1d6e46, #0d4a2e);">
+        <span class="tag">Flow, here</span>
+        <h3>Ease Inside an Open Door</h3>
+        <p>The Venus stretch isn't just personal harmony — it's harmony arriving right as a bigger opportunity is already in motion. Ease here is borrowed momentum from the door already opening, not a private good mood.</p>
+      </div>
+      <div class="card" style="--accent:#f0c56a; background:linear-gradient(160deg, #a8752e, #7a531f);">
+        <span class="tag">Gentle vigilance, here</span>
+        <h3>Visibility Before She's Ready</h3>
+        <p>The Sun and Moon windows land while she's newly visible to people who matter (faculty, legacy program eyes). The watch-point isn't mood for its own sake — it's managing exposure and sensitivity while under a bigger spotlight than usual.</p>
+      </div>
+      <div class="card" style="--accent:#f0917a; background:linear-gradient(160deg, #a8402c, #7a2c1e);">
+        <span class="tag">High vigilance, here</span>
+        <h3>Distraction With Real Cost</h3>
+        <p>Mars and Rahu's friction and scatter land while a genuine opportunity is live. The stakes are higher than generic distraction — losing focus here risks the actual door, not just a bad week.</p>
+      </div>
+    </div>
+
+    <div class="watch-box" style="margin-top:32px;">
+      <b>Rahu · Saturn — "long-haul mastery" (Aug 2027 – mid 2030)</b>
+      The door has already opened; this era is about whether the craft can hold up under sustained weight. Every level below is colored by proving, not arriving:
+    </div>
+    <div class="grid" style="margin-top:14px;">
+      <div class="card" style="--accent:#6be3a4; background:linear-gradient(160deg, #1d6e46, #0d4a2e);">
+        <span class="tag">Flow, here</span>
+        <h3>Relief, Not Excitement</h3>
+        <p>Mercury and Venus flow windows in this era read as recovery — a return to herself after grind, not a new opening. The feeling is closer to exhaling than to a fresh door swinging wide.</p>
+      </div>
+      <div class="card" style="--accent:#f0c56a; background:linear-gradient(160deg, #a8752e, #7a531f);">
+        <span class="tag">Gentle vigilance, here</span>
+        <h3>Fog Inside a Long Haul</h3>
+        <p>Ketu's foggy stretch and the repeated Sun/Moon windows land mid-marathon — the risk isn't losing an opportunity, it's losing motivation quietly in the middle of a long project with no finish line in sight yet.</p>
+      </div>
+      <div class="card" style="--accent:#f0917a; background:linear-gradient(160deg, #a8402c, #7a2c1e);">
+        <span class="tag">High vigilance, here</span>
+        <h3>Testing Whether She'll Stay</h3>
+        <p>Mars and Rahu friction in this era isn't about missing a door — it's about whether she keeps training when nothing new is being offered, just repetition. The temptation is to quit the grind, not to miss an invitation.</p>
+      </div>
+      <div class="card" style="--accent:#e08a8a; background:linear-gradient(160deg, #7a1f1f, #4a1212);">
+        <span class="tag">Heaviest test, here</span>
+        <h3>Saturn Inside Saturn</h3>
+        <p>The Saturn pratyantar landing inside the Saturn antardasha is a doubled signature — the single heaviest stretch in the whole four years. This is the era's defining test: whether mastery gets built or the effort quietly stalls.</p>
+      </div>
+    </div>
+
+    <div class="watch-box" style="margin-top:32px;">
+      <b>Rahu · Mercury — "her own signature" (begins ~mid 2030, just past graduation)</b>
+      Only the opening edge of this era falls inside her four Berklee years, but it's worth naming: this is the era where flow stops meaning relief or borrowed momentum, and starts meaning something actually self-authored. The craft built through the Saturn years becomes hers to use on her own terms.
+    </div>
+
+  </div>
+
+  <!-- ===================== TAB 3: HER PRACTICE ===================== -->
+  <div class="panel" id="practice">
+
+    <p class="lede">Her craft, distilled into practice — the style that fits her instrument, the words that steady her, and the small rituals that turn preparation into performance.</p>
+
+    <div class="section-label">Ideal Dance Style</div>
+    <div class="grid">
+      <div class="card gold">
+        <span class="tag">Foundation</span>
+        <h3>Precision-Led Theatrical Jazz</h3>
+        <p>Technical exactness and sharp control in every line, paired with grace, harmony, and composed staging — movement built on discipline first, feeling second.</p>
+      </div>
+      <div class="card rose">
+        <span class="tag">Undercurrent</span>
+        <h3>Storytelling Through Intensity</h3>
+        <p>Real emotional depth running underneath the polish — her strongest work happens when the movement is telling something true, not just performing steps.</p>
+      </div>
+      <div class="card teal">
+        <span class="tag">Signature</span>
+        <h3>Bold, Expansive, Unafraid of Scale</h3>
+        <p>Big, generous physicality that takes up space, with a natural pull toward innovation and breaking form rather than staying inside convention.</p>
+      </div>
+    </div>
+    <p class="pullquote">Sharp isolations. Theatrical charisma. A story underneath every step.</p>
+
+    <div class="section-label">Modern Techniques That Resonate</div>
+    <div class="grid">
+      <div class="card rose">
+        <span class="tag">Strongest Match</span>
+        <h3>Limón Technique</h3>
+        <p>Built on fall and recovery — movement driven by breath, weight, and gravity in waves. A near-literal physical language for her Emotional Authority, which works the same way: ride the wave, don't force the moment.</p>
+      </div>
+      <div class="card gold">
+        <span class="tag">Close Second</span>
+        <h3>Graham Technique</h3>
+        <p>Contraction and release — a physical vocabulary for tightening and expelling emotion, often through raw, mythic, psychological material. Gives her depth somewhere concrete to go rather than staying internal.</p>
+      </div>
+      <div class="card teal">
+        <span class="tag">Strong Third</span>
+        <h3>Horton / Ailey Lineage</h3>
+        <p>Anatomically precise and technically demanding, carried through performance with real spiritual and emotional weight — rewards both her exactness and her need to feel something true on stage.</p>
+      </div>
+      <div class="card rose">
+        <span class="tag">Complementary Practice</span>
+        <h3>Contact Improvisation</h3>
+        <p>Built on responding to a partner's weight and offer rather than initiating alone — a striking match for a strategy built around waiting for the invitation, not forcing the room.</p>
+      </div>
+    </div>
+    <p class="pullquote" style="font-size:16px; color:rgba(244,236,218,0.6);">Cunningham technique sharpens the precision beautifully, but deliberately detaches movement from emotional narrative — a useful sharpening tool, less a home base.</p>
+
+    <div class="section-label">Success Mantra</div>
+    <p class="pullquote">"My precision is my power.<br>My patience is my invitation.<br>I dance to teach, not only to be seen."</p>
+
+    <div class="section-label">Dance Spirit Animal</div>
+    <div class="grid">
+      <div class="card gold">
+        <span class="tag">Primary</span>
+        <div class="emblem-ring">
+        <svg class="emblem" viewBox="0 0 300 300" role="img" aria-label="Sigil representing the firebird — an ascending flame-spine crossed by wing strokes within a bound circle">
+          <defs>
+            <linearGradient id="fireSig" x1="0" y1="1" x2="0" y2="0">
+              <stop offset="0%" stop-color="#7a2020"/>
+              <stop offset="100%" stop-color="#e8c874"/>
+            </linearGradient>
+          </defs>
+          <circle cx="150" cy="150" r="120" fill="none" stroke="#c9a15c" stroke-width="1.5" opacity="0.55"/>
+          <circle cx="150" cy="150" r="104" fill="none" stroke="#c9a15c" stroke-width="0.5" opacity="0.3"/>
+          <line x1="150" y1="150" x2="150" y2="66" stroke="#c9a15c" stroke-width="0.5" opacity="0.4"/>
+          <line x1="150" y1="150" x2="150" y2="234" stroke="#c9a15c" stroke-width="0.5" opacity="0.4"/>
+          <line x1="150" y1="150" x2="66" y2="150" stroke="#c9a15c" stroke-width="0.5" opacity="0.4"/>
+          <line x1="150" y1="150" x2="234" y2="150" stroke="#c9a15c" stroke-width="0.5" opacity="0.4"/>
+          <path d="M150,225 L150,120" stroke="url(#fireSig)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <path d="M150,150 L92,95" stroke="url(#fireSig)" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M150,150 L208,95" stroke="url(#fireSig)" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M92,95 L84,80 L104,90 Z" fill="#e8c874"/>
+          <path d="M208,95 L216,80 L196,90 Z" fill="#e8c874"/>
+          <path d="M150,120 L142,88 L158,88 Z" fill="#e8c874"/>
+          <path d="M150,190 L128,222" stroke="url(#fireSig)" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M150,190 L172,222" stroke="url(#fireSig)" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <circle cx="150" cy="150" r="9" fill="#12100a" stroke="#e8c874" stroke-width="2"/>
+        </svg>
+        </div>
+        <h3>The Firebird</h3>
+        <p>Fire, transformation, and rebirth through the flame — big passionate energy that turns intensity into something luminous on stage.</p>
+      </div>
+      <div class="card rose">
+        <span class="tag">Undertone</span>
+        <div class="emblem-ring">
+        <svg class="emblem" viewBox="0 0 300 300" role="img" aria-label="Sigil representing the swan — a rising neck-spine crossed by wing strokes within a bound circle, mirroring the firebird's construction">
+          <defs>
+            <linearGradient id="swanSig" x1="0" y1="1" x2="0" y2="0">
+              <stop offset="0%" stop-color="#0e6b47"/>
+              <stop offset="100%" stop-color="#3fbf82"/>
+            </linearGradient>
+          </defs>
+          <circle cx="150" cy="150" r="120" fill="none" stroke="#c9a15c" stroke-width="1.5" opacity="0.55"/>
+          <circle cx="150" cy="150" r="104" fill="none" stroke="#c9a15c" stroke-width="0.5" opacity="0.3"/>
+          <line x1="150" y1="150" x2="150" y2="66" stroke="#c9a15c" stroke-width="0.5" opacity="0.4"/>
+          <line x1="150" y1="150" x2="150" y2="234" stroke="#c9a15c" stroke-width="0.5" opacity="0.4"/>
+          <line x1="150" y1="150" x2="66" y2="150" stroke="#c9a15c" stroke-width="0.5" opacity="0.4"/>
+          <line x1="150" y1="150" x2="234" y2="150" stroke="#c9a15c" stroke-width="0.5" opacity="0.4"/>
+          <path d="M150,225 L150,120" stroke="url(#swanSig)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <path d="M150,150 L92,95" stroke="url(#swanSig)" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M150,150 L208,95" stroke="url(#swanSig)" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M92,95 C82,88 78,78 84,70 C92,80 96,88 92,95 Z" fill="#d98fa0"/>
+          <path d="M208,95 C218,88 222,78 216,70 C208,80 204,88 208,95 Z" fill="#d98fa0"/>
+          <circle cx="150" cy="112" r="10" fill="#12100a" stroke="#3fbf82" stroke-width="2.5"/>
+          <path d="M158,110 L176,104 L161,120 Z" fill="#c9a15c"/>
+          <path d="M150,190 Q132,206 128,222" stroke="url(#swanSig)" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M150,190 Q168,206 172,222" stroke="url(#swanSig)" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <circle cx="150" cy="150" r="9" fill="#12100a" stroke="#3fbf82" stroke-width="2"/>
+        </svg>
+        </div>
+        <h3>The Swan</h3>
+        <p>Grace, harmony, and quiet transformation — the elegance that carries the fire so it reads as beauty, not just heat.</p>
+      </div>
+    </div>
+
+    <div class="section-label">Lucky Colors &amp; Power Crystals</div>
+    <div class="grid">
+      <div class="card gold">
+        <span class="tag">Colors</span>
+        <h3>Her Palette</h3>
+        <div class="swatch-row">
+          <span class="swatch"><i style="background:#0e7a4f"></i>Emerald Green</span>
+          <span class="swatch"><i style="background:#c9a15c"></i>Gold / Amber</span>
+          <span class="swatch"><i style="background:#5c1f2e"></i>Deep Burgundy</span>
+          <span class="swatch"><i style="background:#e8b4bc"></i>Soft Rose</span>
+        </div>
+        <p style="margin-top:14px;">Emerald and gold as anchors — burgundy for dramatic, story-driven pieces; soft rose for anything needing grace over intensity.</p>
+      </div>
+      <div class="card teal">
+        <span class="tag">Crystals</span>
+        <h3>Her Talismans</h3>
+        <p><b>Emerald</b> — her anchor stone, worn or carried as the core talisman.</p>
+        <p><b>Carnelian</b> — for courage and fire before demanding performances.</p>
+        <p><b>Smoky Quartz / Black Tourmaline</b> — for grounding and quieting overthinking beforehand.</p>
+        <p><b>Rose Quartz</b> — to soften and settle before emotionally-led pieces.</p>
+      </div>
+    </div>
+
+    <div class="section-label">Pre-Performance Ritual</div>
+    <ol class="ritual-list">
+      <li><b>Quiet solitary window</b> — quiet, alone, 15–20 minutes before. Rest and settle rather than hype and drill.</li>
+      <li><b>Emotional check-in</b> — name whatever she's actually feeling, nerves included, rather than pushing past it.</li>
+      <li><b>Hold her stone</b> — Emerald, or Carnelian for fire-driven pieces — and speak the mantra once, quietly.</li>
+      <li><b>One precise technical run-through</b> — a small, exact sequence to reassure the craft before she goes on.</li>
+      <li><b>Step out already chosen</b> — not proving her spot, but performing from a place of having already been invited.</li>
+    </ol>
+
+  </div>
+
+  <!-- ===================== TAB 4: OPPORTUNITIES ===================== -->
+  <div class="panel" id="strategy">
+
+    <p class="lede">The strategy for how she moves toward a specific goal — built from her actual design, not generic career advice.</p>
+
+    <div class="section-label">Entering the Fosse Legacy</div>
+    <p class="pullquote">The goal isn't to convince them she belongs there — it's to make it obvious.</p>
+
+    <div class="grid">
+      <div class="card gold">
+        <span class="tag">The Core Reframe</span>
+        <h3>Don't Apply — Become Visible</h3>
+        <p>Her strategy is invitation, not initiation. The version of this that works isn't a pitch or a campaign — it's making her excellence undeniable to the people who already run the program, so the invitation comes to her.</p>
+      </div>
+      <div class="card rose">
+        <span class="tag">Timing</span>
+        <h3>Now, Not Later</h3>
+        <p>Her current period carries a documented pattern of opportunity arriving through a mentor or bigger name attached to legacy — exactly this shape of opportunity. This window is open now and narrows within the next year.</p>
+      </div>
+    </div>
+
+    <ol class="ritual-list">
+      <li><b>Build the relationship before the ask.</b> Get into the orbit of the faculty connected to the program through consistent, visible excellence in the room they're already watching — not a cold pitch.</li>
+      <li><b>Let someone else say her name first, if possible.</b> A teacher's organic recommendation carries far more weight for her than a self-submitted application.</li>
+      <li><b>Never send a direct ask in the moment.</b> Draft it, then sit on it 24–48 hours before sending — clarity needs the wave to pass before it's trustworthy.</li>
+      <li><b>Lead with proof, not potential.</b> Her competitive history — 17 pieces, a world stage, representing Canada — is real and large. State her scope plainly; this isn't a moment for modest framing.</li>
+      <li><b>Make the application personal, not generic.</b> Her expression is strongest speaking from her own actual story, not a polished "correct" application voice.</li>
+    </ol>
+
+  </div>
+
+  <!-- ===================== TAB 5: HER TECHNIQUE ===================== -->
+  <div class="panel" id="technique">
+
+    <p class="lede">A personal cue she can carry with her — for the moment friction shows up, when a small thing pulls against a larger plan.</p>
+
+    <div class="section-label">The Cue</div>
+    <p class="pullquote">"Not the whole plan.<br>Move first.<br>Note it later."</p>
+
+    <div class="section-label">Why It's Built This Way</div>
+    <div class="grid">
+      <div class="card rose">
+        <span class="tag">The Real Reason "Hurry Up" Doesn't Work</span>
+        <h3>Her Authority Can't Rush</h3>
+        <p>Her decision-making runs on Emotional Authority — clarity arrives after a wave passes, not on command. Pressure in the moment doesn't produce speed for her; it produces friction. That's not a discipline gap, it's how she's built.</p>
+      </div>
+      <div class="card gold">
+        <span class="tag">Beat One</span>
+        <h3>"Not the Whole Plan"</h3>
+        <p>The instant she notices she's choosing to keep doing the other thing — that's the catch. It isn't a real decision against the schedule, it's just where her attention happens to be sitting right now. Naming it breaks the autopilot.</p>
+      </div>
+      <div class="card teal">
+        <span class="tag">Beat Two</span>
+        <h3>"Move First"</h3>
+        <p>Don't try to decide — stand up, put the shoes on, pick up the bag. Action is available even when a clean decision isn't. She already trusts her body inside a phrase of choreography before her mind has consciously worked through every count. Same trust, new target.</p>
+      </div>
+      <div class="card rose">
+        <span class="tag">Beat Three</span>
+        <h3>"Note It Later"</h3>
+        <p>That night or the next day — one quick question: what pulled me off, and what actually got me moving? Not a critique. A rehearsal note. The exact same loop she already trusts from training: run it, notice what broke, adjust, run it again.</p>
+      </div>
+    </div>
+
+    <div class="section-label">The Shape That Stays Fixed</div>
+    <p class="pullquote" style="font-size:18px;">The specific choices change every time — that's the trial and error, and it's supposed to happen. What stays constant is the shape itself: catch it, move before deciding, review after. That consistency is what turns scattered attempts into an actual built skill.</p>
+
+    <div class="synthesis">
+      "This isn't about becoming someone who's naturally on time. It's about becoming someone who has a reliable move for the moment friction shows up — and that's a target she can actually own."
+    </div>
+
+    <div class="section-label">One More Quick Self-Check</div>
+    <p class="lede" style="margin-top:0; font-size:18px;">Under real stress, most people default to one of a few patterns to get attention or control back. Worth knowing her own default — not to fix it on the spot, just to notice it as it's happening.</p>
+    <div class="watch-box">
+      <b>The four patterns</b>
+      Pushing/dominating the moment · Grilling others with questions until they back down · Going quiet and withdrawing · Playing helpless so someone else steps in. Nobody is only one of these — but most people lean on one by default when cornered.
+    </div>
+    <p class="pullquote" style="font-size:16px; color:rgba(244,236,218,0.65);">The move isn't to judge which one shows up. It's just to notice — "oh, that's the one I'm doing right now" — the same way she already notices what pulled her off schedule.</p>
+
+  </div>
+
+  <!-- ===================== TAB 6: THE SURF ===================== -->
+  <div class="panel" id="surf">
+
+    <p class="lede">Six principles from Reality Transurfing, translated into practice — and laid directly against her existing chart, because the two turn out to be saying the same thing in different languages.</p>
+
+    <div class="section-label">The Six Principles</div>
+    <div class="grid">
+      <div class="card gold">
+        <span class="tag">I · The Space of Variations</span>
+        <h3>Tune In, Don't Chase</h3>
+        <p>Every outcome she could want already exists as a possibility. The work isn't straining toward it — it's tuning her attention until she's standing in the version of events where it's already true.</p>
+      </div>
+      <div class="card rose">
+        <span class="tag">II · Pendulums</span>
+        <h3>Take Part Without Feeding It</h3>
+        <p>Audition drama, comparison culture, competitive panic — these are shared currents that run on people's fear and urgency. She can engage with them practically without emotionally feeding them.</p>
+      </div>
+      <div class="card teal">
+        <span class="tag">III · The Wave of Success</span>
+        <h3>One Wave, Not Two Events</h3>
+        <p>A good stretch and a hard stretch are part of the same motion, not separate emergencies. Overreacting to either the high or the low is what tips a normal wave into a bigger swing.</p>
+      </div>
+      <div class="card gold">
+        <span class="tag">IV · The Balance</span>
+        <h3>Care Without Worrying</h3>
+        <p>Inflating how much a single audition or showcase "means" creates the very tension that works against her. Doing the work fully while holding the outcome loosely is the actual position of strength.</p>
+      </div>
+      <div class="card rose">
+        <span class="tag">V · An Induced Transition</span>
+        <h3>Guard What She Feeds Her Attention</h3>
+        <p>Dwelling on doom, comparison, or a harsh inner critic doesn't just feel bad — it actively steers what happens next. What she keeps her attention on is not a neutral act.</p>
+      </div>
+      <div class="card teal">
+        <span class="tag">VI · The Flow of Variations</span>
+        <h3>Intuition Is Information, Not Noise</h3>
+        <p>A hunch, a premonition, a flash of creative instinct — treated as real signal to act on, not randomness to second-guess after the fact.</p>
+      </div>
+    </div>
+
+    <div class="section-label">Why This Isn't a New System — It's the Same One, Confirmed</div>
+    <div class="watch-box">
+      <b>The convergence</b>
+      Her Projector Strategy is "wait for the invitation" — don't force. Her Emotional Authority requires a wave to pass before clarity arrives — don't rush. Reality Transurfing's central move, across all six principles above, is exactly this: stop forcing, tune in instead. Three unrelated systems — Vedic astrology, Human Design, and this book — all landing on the identical instruction is not a coincidence worth ignoring.
+    </div>
+
+    <ol class="ritual-list">
+      <li><b>Before a big moment:</b> ask whether she's straining toward the outcome or tuned toward it. Straining is the tell that importance has quietly inflated.</li>
+      <li><b>When panic is spreading around her</b> (backstage, group chat, family urgency): she can do exactly what's needed without taking on the emotional charge — participate, don't feed.</li>
+      <li><b>After a rejection or a win:</b> name it as one point on a wave, not a verdict. Neither one is the whole story on its own.</li>
+      <li><b>When a hunch shows up</b> about a piece, a role, or a choice — treat it as data. Note it, the way she already notes what pulled her off schedule.</li>
+    </ol>
+
+    <p class="pullquote" style="margin-top:36px; font-size:17px; color:rgba(244,236,218,0.75);">One more thread, from a different book entirely, saying the same thing again: the coincidences that seem to arrive at exactly the right moment — a name mentioned twice in a week, a door opening right when she'd stopped pushing on it — are worth treating as real information, not chalked up to chance. Not a system to study. Just something to notice.</p>
+
+  </div>
+
+  <!-- ===================== TAB 7: HER COACH ===================== -->
+  <div class="panel" id="coach">
+
+    <p class="lede">Grounded in everything on the other tabs — her chart, her design, her techniques — and able to remember the conversation as it builds, rather than starting over each time.</p>
+
+    <div class="coach-gate" id="coach-gate">
+      <p style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--gold-dim);">Enter passphrase to begin</p>
+      <input type="password" id="coach-pass" placeholder="Passphrase">
+      <button onclick="coachUnlock()">Begin</button>
+    </div>
+
+    <div id="chat-panel">
+      <div id="chat-messages">
+        <div class="cmsg sys">This is a grounding space, not a substitute for real people in your life. If something feels like more than this can hold, reach out to someone you trust.</div>
+      </div>
+      <div id="chat-input-row">
+        <textarea id="chat-input" placeholder="What's going on?" rows="1"></textarea>
+        <button id="chat-send" onclick="coachSend()">Send</button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>Vedic astrology · Human Design · Numerology · Gene Keys · Draconic chart · Western technical astrology · Reality Transurfing</footer>
+
+<script>
+  let coachPassphrase = sessionStorage.getItem('coachPass') || '';
+  if (coachPassphrase) {
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('coach-gate').style.display = 'none';
+      document.getElementById('chat-panel').style.display = 'flex';
+    });
+  }
+
+  function coachUnlock(){
+    coachPassphrase = document.getElementById('coach-pass').value;
+    sessionStorage.setItem('coachPass', coachPassphrase);
+    document.getElementById('coach-gate').style.display = 'none';
+    document.getElementById('chat-panel').style.display = 'flex';
+    document.getElementById('chat-input').focus();
+  }
+  document.getElementById('coach-pass').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') coachUnlock();
+  });
+
+  const chatMessages = document.getElementById('chat-messages');
+  const chatInput = document.getElementById('chat-input');
+  const chatSend = document.getElementById('chat-send');
+
+  chatInput.addEventListener('input', () => {
+    chatInput.style.height = 'auto';
+    chatInput.style.height = Math.min(chatInput.scrollHeight, 110) + 'px';
+  });
+  chatInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); coachSend(); }
+  });
+
+  function addChatMsg(role, text){
+    const div = document.createElement('div');
+    div.className = 'cmsg ' + role;
+    div.textContent = text;
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+  function addTypingIndicator(){
+    const div = document.createElement('div');
+    div.className = 'ctyping';
+    div.id = 'ctyping';
+    div.innerHTML = '<span></span><span></span><span></span>';
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+  function removeTypingIndicator(){
+    const el = document.getElementById('ctyping');
+    if (el) el.remove();
+  }
+
+  async function coachSend(){
+    const text = chatInput.value.trim();
+    if (!text) return;
+    addChatMsg('user', text);
+    chatInput.value = '';
+    chatInput.style.height = 'auto';
+    chatSend.disabled = true;
+    addTypingIndicator();
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-coach-passphrase': coachPassphrase },
+        body: JSON.stringify({ message: text }),
+      });
+      removeTypingIndicator();
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        addChatMsg('sys', err.error || 'Something went wrong — try again.');
+      } else {
+        const data = await res.json();
+        addChatMsg('coach', data.reply);
+      }
+    } catch (e) {
+      removeTypingIndicator();
+      addChatMsg('sys', 'Connection issue — the backend may not be deployed yet.');
+    } finally {
+      chatSend.disabled = false;
+      chatInput.focus();
+    }
+  }
+</script>
+
+<script>
+  const PERIODS = [
+    { planet:"Venus", start:"2026-04-24", end:"2026-09-18", level:"flow", label:"Flow", desc:"Harmony and grace come easily — good window to build a habit while it costs little effort to maintain." },
+    { planet:"Sun", start:"2026-09-18", end:"2026-11-02", level:"gentle", label:"Gentle vigilance", desc:"Visibility and ego exposure rise. Watch for pride or overextending to be seen." },
+    { planet:"Moon", start:"2026-11-02", end:"2027-01-14", level:"gentle", label:"Gentle vigilance", desc:"Emotional sensitivity and intuition run high — good for artistry, needs a conscious hand on mood." },
+    { planet:"Mars", start:"2027-01-14", end:"2027-03-04", level:"high", label:"High vigilance", desc:"Friction and impulsiveness — pace matters more than usual, extra care with body and temper." },
+    { planet:"Rahu", start:"2027-03-04", end:"2027-07-14", level:"high", label:"High vigilance", desc:"Restlessness and scatter — the longest single risk stretch in year one." },
+    { planet:"Saturn", start:"2027-07-14", end:"2027-12-26", level:"heaviest", label:"Heaviest test", desc:"Slow results, real fatigue — not punishing, proving. Holding steady here is what mastery is built from." },
+    { planet:"Mercury", start:"2027-12-26", end:"2028-05-21", level:"flow", label:"Flow", desc:"A genuine return to herself — mental clarity and precision come more naturally." },
+    { planet:"Ketu", start:"2028-05-21", end:"2028-07-21", level:"gentle", label:"Gentle vigilance", desc:"A short, foggy stretch — needs a light check-in, not heavy correction." },
+    { planet:"Venus", start:"2028-07-21", end:"2029-01-12", level:"flow", label:"Flow", desc:"Harmony returns for a longer stretch — strong for relationships and ease in the craft." },
+    { planet:"Sun", start:"2029-01-12", end:"2029-03-04", level:"gentle", label:"Gentle vigilance", desc:"Likely real leadership or spotlight moments — same watch-point on ego applies." },
+    { planet:"Moon", start:"2029-03-04", end:"2029-05-29", level:"gentle", label:"Gentle vigilance", desc:"A longer emotional-sensitivity stretch — needs sustained conscious balance." },
+    { planet:"Mars", start:"2029-05-29", end:"2029-07-29", level:"high", label:"High vigilance", desc:"Same friction caution, landing near a school year's end when fatigue is already higher." },
+    { planet:"Rahu", start:"2029-07-29", end:"2030-01-03", level:"high", label:"High vigilance", desc:"Distraction risk right before her final year's home stretch." },
+    { planet:"Jupiter", start:"2030-01-03", end:"2030-05-20", level:"gentle", label:"Gentle vigilance (effort required)", desc:"Growth is on offer but has to be worked for, right as she closes out Berklee." },
+  ];
+  const LEVEL_COLOR = { flow:"#3fbf82", gentle:"#e0b872", high:"#e0806c", heaviest:"#c56a6a" };
+
+  function renderOutlookBanner(){
+    const today = new Date().toISOString().slice(0,10);
+    const idx = PERIODS.findIndex(p => today >= p.start && today < p.end);
+    const banner = document.getElementById('outlook-banner');
+    if (idx === -1) { banner.style.display = 'none'; return; }
+    const p = PERIODS[idx];
+    const color = LEVEL_COLOR[p.level];
+    const daysLeft = Math.round((new Date(p.end) - new Date(today)) / 86400000);
+    banner.style.borderLeftColor = color;
+    banner.innerHTML = `
+      <div>
+        <div class="ob-label" style="color:${color};">Current Outlook · ${p.label} · ${p.planet}</div>
+        <div class="ob-desc">${p.desc}</div>
+      </div>
+      <div class="ob-days">${daysLeft} day${daysLeft===1?'':'s'} left</div>
+    `;
+  }
+  renderOutlookBanner();
+</script>
+
+<script>
+  const buttons = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.panel');
+  buttons.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      buttons.forEach(b=>b.classList.remove('active'));
+      panels.forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  });
+</script>
+
+</body>
+</html>
