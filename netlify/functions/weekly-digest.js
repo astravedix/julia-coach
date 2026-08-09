@@ -2,7 +2,7 @@ const { getCurrentAndNext } = require("./periods");
 
 const RESEND_API_URL = "https://api.resend.com/emails";
 const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages";
-const MODEL = "claude-sonnet-4-6";
+const MODEL = "claude-sonnet-5";
 
 function daysBetween(a, b) {
   const ms = new Date(b) - new Date(a);
