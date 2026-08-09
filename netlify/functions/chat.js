@@ -8,6 +8,19 @@ const MAX_TOKENS = 1000;
 const HISTORY_CAP = 24; // keep last N messages in full before summarizing
 const STORE_NAME = "julia-coach-memory";
 
+// Netlify's automatic Blobs context injection is unreliable on some site
+// configurations (a known platform issue). If BLOBS_SITE_ID and
+// BLOBS_TOKEN are set, use them explicitly — otherwise fall back to
+// automatic detection.
+function getBlobStore() {
+  const siteID = process.env.BLOBS_SITE_ID;
+  const token = process.env.BLOBS_TOKEN;
+  if (siteID && token) {
+    return getStore({ name: STORE_NAME, siteID, token });
+  }
+  return getStore(STORE_NAME);
+}
+
 // Simple shared-passphrase gate so a random visitor with the URL can't
 // rack up API charges. Set COACH_PASSPHRASE in Netlify env vars.
 function checkAuth(event) {
@@ -89,11 +102,18 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: JSON.stringify({ error: "Missing 'message'" }) };
   }
 
-  const store = getStore(STORE_NAME);
-
-  // Load existing memory (history + running summary)
-  const memoryRaw = await store.get("memory", { type: "json" });
-  const memory = memoryRaw || { history: [], summary: "" };
+  let store, memory;
+  try {
+    store = getBlobStore();
+    const memoryRaw = await store.get("memory", { type: "json" });
+    memory = memoryRaw || { history: [], summary: "" };
+  } catch (err) {
+    console.error("Blobs store error:", err);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: `Memory storage error: ${err.message}` }),
+    };
+  }
 
   // Build the system prompt: base profile + running summary of older convo
   const systemParts = [JULIA_PROFILE];
@@ -117,7 +137,7 @@ exports.handler = async (event) => {
     console.error(err);
     return {
       statusCode: 502,
-      body: JSON.stringify({ error: "Coach is unavailable right now. Try again shortly." }),
+      body: JSON.stringify({ error: `Coach is unavailable right now: ${err.message}` }),
     };
   }
 
@@ -146,7 +166,13 @@ exports.handler = async (event) => {
     }
   }
 
-  await store.setJSON("memory", { history: newHistory, summary: newSummary });
+  try {
+    await store.setJSON("memory", { history: newHistory, summary: newSummary });
+  } catch (err) {
+    console.error("Blobs save error:", err);
+    // Don't fail the whole request just because saving memory failed —
+    // she still gets her reply, it just won't be remembered next time.
+  }
 
   return {
     statusCode: 200,
