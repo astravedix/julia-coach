@@ -3,7 +3,7 @@ const { JULIA_PROFILE } = require("./profile");
 
 // --- Config ---
 const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages";
-const MODEL = "claude-sonnet-4-6";
+const MODEL = "claude-sonnet-5";
 const MAX_TOKENS = 1000;
 const HISTORY_CAP = 24; // keep last N messages in full before summarizing
 const STORE_NAME = "julia-coach-memory";
