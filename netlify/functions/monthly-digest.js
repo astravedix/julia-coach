@@ -3,7 +3,7 @@ const { getEraForDate, getBerkleeYear } = require("./eras");
 
 const RESEND_API_URL = "https://api.resend.com/emails";
 const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages";
-const MODEL = "claude-sonnet-4-6";
+const MODEL = "claude-sonnet-5";
 
 function levelColor(level) {
   return { flow: "#3fbf82", gentle: "#e0b872", high: "#e0806c", heaviest: "#c56a6a" }[level] || "#c9a15c";
