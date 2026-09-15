@@ -102,8 +102,5 @@ exports.handler = async () => {
   return { statusCode: 200, body: "Digest sent." };
 };
 
-// Netlify Scheduled Function: runs every Monday at 13:00 UTC.
-// Cron syntax: minute hour day-of-month month day-of-week
-exports.config = {
-  schedule: "0 13 * * 1",
-};
+// Schedule is declared in netlify.toml (this function's CommonJS style
+// isn't reliably recognized by the inline `exports.config` schedule syntax).
