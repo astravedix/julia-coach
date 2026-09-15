@@ -130,7 +130,5 @@ exports.handler = async () => {
   return { statusCode: 200, body: "Monthly digest sent." };
 };
 
-// Netlify Scheduled Function: runs the 1st of every month at 13:00 UTC.
-exports.config = {
-  schedule: "0 13 1 * *",
-};
+// Schedule is declared in netlify.toml (this function's CommonJS style
+// isn't reliably recognized by the inline `exports.config` schedule syntax).
