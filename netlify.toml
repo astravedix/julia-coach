@@ -5,6 +5,12 @@
 [functions]
   node_bundler = "esbuild"
 
+[functions."weekly-digest"]
+  schedule = "0 13 * * 1"
+
+[functions."monthly-digest"]
+  schedule = "0 13 1 * *"
+
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
